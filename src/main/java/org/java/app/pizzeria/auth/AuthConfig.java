@@ -17,6 +17,7 @@ public class AuthConfig {
 	SecurityFilterChain  filterChain(HttpSecurity http) throws Exception {
 		
 		http.csrf().disable().authorizeHttpRequests()
+		.requestMatchers("/api/pizza/**").permitAll()
 		.requestMatchers("/pizza/create").hasAuthority("admin")
 		.requestMatchers("/pizza/update/**").hasAuthority("admin")
 		.requestMatchers("/pizza/delete/**").hasAuthority("admin")
