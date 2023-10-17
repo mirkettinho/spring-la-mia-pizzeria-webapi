@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+    <title>Aggiungi Offerta</title>
+</head>
+<body style="background-color: #fcc490;">
+<div class="container">
+    <h1>Aggiungi una nuova Offerta</h1>
+    <form
+            id="offerta-form"
+            th:action="@{/offerte/create}"
+            th:object="${offerta}"
+            method="POST"
+    >
+        <input type="hidden" th:field="*{pizza}">
+        
+        <!-- TITOLO OFFERTA -->
+        <div class="mb-3">
+            <label for="titolo" class="form-label">Nome Offerta:</label>
+            <input type="text" class="form-control" id="titolo" th:field="*{titolo}" required
+                   th:errorClass="is-invalid">
+        </div>
+        
+        <!-- DATA INIZIO OFFERTA -->
+        <div class="mb-3">
+            <label for="dataInizio" class="form-label">Data Inizio</label>
+            <input type="date" class="form-control" id="dataInizio" th:field="*{dataInizio}"
+                   th:errorClass="is-invalid">
+        </div>
+
+        <!-- DATA FINE OFFERTA -->
+        <div class="mb-3">
+            <label for="dataFine" class="form-label">Data Fine</label>
+            <input type="date" class="form-control" id="dataFine" th:field="*{dataFine}"
+                   th:errorClass="is-invalid">
+        </div>
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Salva</button>
+            <a class="btn btn-primary" th:href="@{/pizza-details/{pizzaId}(pizzaId = ${offerta.pizza.id})}">Torna
+                indietro</a>
+        </div>
+    </form>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Pizza Create</title>
+<!-- BOOTSTRAP -->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+</head>
+<body style="background-color: #fcc490;">
+	
+	<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #009fc6 !important">
+	  <div class="container-fluid">
+	    <img src="https://cdn.dribbble.com/userupload/3998365/file/original-3d7c01cf81640402135fc56a02cbac20.jpg?resize=1024x1027" width="50px">
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="/">Home</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link text-white" th:href="@{/pizza/create}">Nuova Pizza</a>
+	        </li>
+	      </ul>
+	      <!-- FORM !-->
+	      <form class="d-flex" role="search">
+			<label for="search" class="d-none">Search</label>
+	        <input class="form-control me-2" type="search" name="searchInput" th:value="${searchInput}" placeholder="Search" aria-label="Search">
+	        <button class="btn btn-success" type="submit">Search</button>		
+	      </form>
+	    </div>
+	  </div>
+	</nav>
+	
+	<main class="text-center">
+		
+		<h1 style="font-size: 100px;">
+			<span th:if="${pizza.id < 1}">Crea Pizza</span>
+			
+			<span th:if="${pizza.id > 0}">Modifica Pizza</span>
+		</h1>
+		
+		<div class="d-flex align-items-center flex-column">
+			
+		<form class="d-flex flex-column" style="width: 500px;" th:object="${pizza}"
+				method="POST">
+			
+			<label for="name" style="font-weight: bold; font-size: 22px;">Nome</label>
+			<input type="text" name="name" th:value="*{name}" class="p-2 mb-3 rounded form-control" style="border: none;">
+			
+			
+				
+			
+			  <label for="description" style="font-weight: bold; font-size: 22px;">Description</label>
+			  <textarea class="form-control" placeholder="Leave a description here" name="description" th:value="*{description}"></textarea>
+			
+			
+			<label for="photo" style="font-weight: bold; font-size: 22px;">Immagine</label>
+			<input type="text" name="photo" th:value="*{photo}" class="p-2 mb-3 rounded form-control" style="border: none;">
+			
+			<label for="price" style="font-weight: bold; font-size: 22px;">Price</label>
+			<input type="number" name="price" th:value="*{price}" class="p-2 mb-3 rounded form-control" style="border: none;">
+			
+			<input type="submit" th:value="${pizza.id > 0 ? 'Modifica' : 'Crea'}" class="mt-2 p-3 btn btn-success">
+		</form>
+		
+		</div>
+	
+	</main>
+</body>
+</html>

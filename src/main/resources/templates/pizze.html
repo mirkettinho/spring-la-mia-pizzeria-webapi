@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Pizze</title>
+<!-- BOOTSTRAP -->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.2/css/bootstrap.min.css}"/>
+</head>
+<body style="background-color: #fcc490;">
+	
+		<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: #009fc6 !important">
+	  <div class="container-fluid">
+	    <img src="https://cdn.dribbble.com/userupload/3998365/file/original-3d7c01cf81640402135fc56a02cbac20.jpg?resize=1024x1027" width="50px">
+	    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	      <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="/">Home</a>
+	        </li>
+	        <li class="nav-item" sec:authorize="hasAnyAuthority('admin')">
+	          <a class="nav-link text-white" th:href="@{/pizza/create}">Nuova Pizza</a>
+	        </li>
+	      </ul>
+	      <!-- FORM !-->
+	      <form class="d-flex" role="search">
+			<label for="search" class="d-none">Search</label>
+	        <input class="form-control me-2" type="search" name="searchInput" th:value="${searchInput}" placeholder="Search" aria-label="Search">
+	        <button class="btn btn-success" type="submit">Search</button>		
+	      </form>
+	    </div>
+	  </div>
+	</nav>
+
+	<main class="text-center">
+		
+		<h1 class="mb-3 mt-5" style="font-size: 100px;">Pizze</h1>
+		
+		<a th:href="@{/pizza/create}" class="btn btn-primary mb-3" sec:authorize="hasAnyAuthority('admin')">Crea una nuova pizza</a>
+		<div class="d-flex justify-content-center">
+			
+			<!-- TABLE -->
+		<table  class="table text-center" style="width: 400px;">
+			  <thead class="table-info">
+			    <tr class="">
+			      <th scope="col">#</th>
+			      <th scope="col">Nome</th>
+			      <th scope="col">Dettagli</th>
+			      <th scope="col"></th>
+			      <th scope="col"></th>
+			    </tr>
+			  </thead>
+			  <tbody class="">
+			    <tr th:each="pizza : ${pizze}" th:object="${pizza}" >
+			      <th scope="row">[[*{id}]]</th>
+			      <td>[[*{name}]]</td>
+			      <td><a th:href="@{pizza-details/{id}(id=*{id})}" class="btn btn-primary">Vai</a></td>
+			      <td><a th:href="@{/pizza/update/{id}(id=*{id})}" class="btn btn-warning" sec:authorize="hasAnyAuthority('admin')">Modifica</a></td>
+				  <td>
+					<form th:action="@{/pizza/delete/{id}(id=*{id})}" method="POST" style="display: inline;"  sec:authorize="hasAnyAuthority('admin')">		
+						<input class="btn btn-danger" type="submit"  value="Elimina" >
+					</form>
+				  </td>
+			    </tr>
+			  </tbody>
+		</table>
+		</div>
+		
+		<h5 th:if="${pizze.size() < 1}">non ci sono pizze!!!</h5>
+		
+	</main>
+</body>
+</html>
